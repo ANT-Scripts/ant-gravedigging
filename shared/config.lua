@@ -1,4 +1,39 @@
 Config = {}
+Config.Notify = "ox_lib" -- "ox_lib" / "okok" / "qb" / "other"
+
+Config.UseCursedItems = true
+Config.TimeUntilGhostAttack = 45 -- In minutes, how long until the Ghost Attacks if you have a cursed item. This is a LOOP
+Config.CursedItems = {
+    'sandwich'
+}
+
+Config.SpawnZombies = true
+Config.ChanceForZombie = 0 -- 50% chance for a zombie to spawn
+
+Config.GhostAttack = true
+Config.GhostAttackChance = 20
+Config.GhostAttackRecoveryTime = 15000
+
+Config.LockCoffinChance = 30
+Config.LockpickItem = "advancedlockpick"
+
+Config.Minigames = {
+    BDMinigames = {
+        Enabled = true,
+        Unlocks = 0,
+        Rows = 2,
+        Time = 20
+    }
+}
+
+Config.Rewards = {
+    {item = 'diamond', min = 1, max = 2, chance = 30},
+}
+
+Config.TombstoneRewards = {
+    {item = 'diamond', min = 1, max = 2, chance = 30},
+}
+
 Config.Gravestones = {
     -- Section 1
     [1] = {coords = vec4(-1632.21057128910, -185.08056640625, 55.6682434082030, 42.738128662109)},
@@ -50,50 +85,40 @@ Config.Gravestones = {
     [47] = {coords = vec4(-1634.5048828125, -162.12953186035, 57.030052185059, 41.43147277832)},
     [48] = {coords = vec4(-1632.8085937500, -160.99642944336, 57.128360748291, 40.315265655518)},
     -- Section 2
+    [49] = {coords = vec4(-1617.1715087891, -160.44866943359, 56.404186248779, 311.68475341797)},
+    [50] = {coords = vec4(-1619.3859863281, -157.44314575195, 56.646926879883, 308.45407104492)},
+    [51] = {coords = vec4(-1620.4127197266, -156.23107910156, 56.750415802002, 310.41445922852)},
+    [52] = {coords = vec4(-1622.3349609375, -153.7667388916, 56.915866851807, 312.05053710938)},
+    [53] = {coords = vec4(-1623.3718261719, -152.56237792969, 56.975402832031, 309.44284057617)},
+    [54] = {coords = vec4(-1625.3604736328, -149.79689025879, 57.125270843506, 313.8024597168)},
+    [55] = {coords = vec4(-1626.7200927734, -148.28785705566, 57.266468048096, 309.62536621094)},
+    [56] = {coords = vec4(-1628.0911865234, -146.4504699707, 57.368721008301, 303.09576416016)},
+    [57] = {coords = vec4(-1634.8110351562, -134.7639465332, 58.264225006104, 305.31207275391)},
+    [58] = {coords = vec4(-1635.9400634766, -132.93142700195, 58.372989654541, 303.1067199707)},
+    [59] = {coords = vec4(-1637.0858154297, -131.0106048584, 58.543231964111, 307.53952026367)},
+    [60] = {coords = vec4(-1646.7934570312, -125.73612976074, 59.338092803955, 1.7255284786224)},
+    [61] = {coords = vec4(-1649.2409667969, -125.59445953369, 59.598335266113, 1.2036490440369)},
+    [62] = {coords = vec4(-1651.2674560547, -125.60182189941, 59.792980194092, 2.9885730743408)},
+    [63] = {coords = vec4(-1653.4698486328, -125.6194152832, 59.928657531738, 1.3913304805756)},
+    [64] = {coords = vec4(-1655.4149169922, -125.42332458496, 60.077484130859, 1.9627087116241)},
+    [65] = {coords = vec4(-1657.4737548828, -125.5237121582, 60.152099609375, 6.7740588188171)},
+    [66] = {coords = vec4(-1659.7180175781, -125.47135162354, 60.21257019043, 8.0070743560791)},
+    [67] = {coords = vec4(-1661.5009765625, -125.24613952637, 60.275764465332, 2.5940668582916)},
+    [68] = {coords = vec4(-1663.4776611328, -125.29209899902, 60.317512512207, 14.174291610718)},
+    [69] = {coords = vec4(-1665.7872314453, -125.23487854004, 60.353218078613, 4.5039620399475)},
+    [70] = {coords = vec4(-1668.8823242188, -125.2074432373, 60.472476959229, 0.42912212014198)},
+    [71] = {coords = vec4(-1670.3251953125, -125.21500396729, 60.733898162842, 8.3808059692383)},
+    [72] = {coords = vec4(-1672.3848876953, -125.81707000732, 60.374088287354, 0.32374355196953)},
+    [73] = {coords = vec4(-1675.7946777344, -125.30501556396, 60.415580749512, 1.1493191719055)},
+    [74] = {coords = vec4(-1677.4147949219, -125.35781860352, 60.401393890381, 2.2360308170319)},
     --[3] = {coords = },
 }
 
 Config.Tombstones = { -- These are the bigger gravestones
     [1] = {coords = vec4(-1644.0201416016, -176.80116271973, 56.728546142578, 30.686498641968)},
     [2] = {coords = vec4(-1642.3084716797, -175.55151367188, 56.707885742188, 39.085586547852)},
+    [3] = {coords = vec4(-1632.3332519531, -146.1063079834, 57.472129821777, 303.52917480469)},
+    [4] = {coords = vec4(-1633.7620849609, -142.54107666016, 57.628887176514, 300.76800537109)},
+    [5] = {coords = vec4(-1634.7370605469, -140.79983520508, 57.707256317139, 304.84619140625)},
     --[3] = {coords = },
-}
-`
-Config.UseCursedItems = true
-Config.CursedItems = {
-    'sandwich'
-}
-
-Config.SpawnZombies = true
-Config.ChanceForZombie = 0 -- 50% chance for a zombie to spawn
-
-Config.GhostAttack = true
-Config.GhostAttackChance = 0
-Config.GhostAttackRecoveryTime = 15000
-Config.TimeUntilGhostAttack = 45 -- In minutes, how long until the Ghost Attacks if you have a cursed item. This is a LOOP
-
-Config.LockCoffinChance = 0
-Config.LockpickItem = "advancedlockpick"
-
-Config.Minigames = {
-    BDMinigames = {
-        Enabled = true,
-        Unlocks = 0,
-        Rows = 2,
-        Time = 20
-    }
-}
-
-Config.Rewards = {
-    {item = 'diamond', min = 1, max = 2, chance = 30},
-}
-
-Config.TombstoneRewards = {
-    {item = 'diamond', min = 1, max = 2, chance = 30},
-}
-
-Config.Progressbar = {
-    duration = 1000,
-    animDict = "amb@world_human_gardener_plant@male@base",
-    animClip = "base",
 }
