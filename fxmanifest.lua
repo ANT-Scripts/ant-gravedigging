@@ -21,3 +21,13 @@ client_scripts {
 server_scripts {
 	'server/*.lua'
 }
+
+
+files {
+    'ui/index.html',
+    'ui/style.css',
+    'ui/script.js',
+    'ui/img/*',
+}
+
+ui_page {'ui/index.html'}
