@@ -11,7 +11,7 @@ Config.SpawnZombies = true
 Config.ChanceForZombie = 0 -- 50% chance for a zombie to spawn
 
 Config.GhostAttack = true
-Config.GhostAttackChance = 20
+Config.GhostAttackChance = 100
 Config.GhostAttackRecoveryTime = 15000
 
 Config.LockCoffinChance = 30
@@ -32,6 +32,12 @@ Config.Rewards = {
 
 Config.TombstoneRewards = {
     {item = 'diamond', min = 1, max = 2, chance = 30},
+}
+
+Config.Progressbar = {
+    duration = 15000,
+    animDict = "amb@world_human_gardener_plant@male@base",
+    animClip = "base",
 }
 
 Config.Gravestones = {

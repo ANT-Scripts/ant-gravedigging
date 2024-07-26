@@ -160,85 +160,117 @@ RegisterNetEvent('ant-gravedigging:client:GhostAttack', function()
 end)
 
 RegisterNetEvent('ant-gravedigging:client:RobGravestone', function(gravestone)
-    local playerPedId = PlayerPedId()
-    TaskStartScenarioInPlace(playerPedId, "CODE_HUMAN_MEDIC_TEND_TO_DEAD", 0, true)
-    FreezeEntityPosition(playerPedId, true)
-    local animPlaying = true
-    Citizen.CreateThread(function()
-        Citizen.Wait(15000)
-        animPlaying = false
-    end)
-    while animPlaying do
-        Citizen.Wait(0)
-    end
-    local chance = math.random(1, 100)
-    if chance <= Config.LockCoffinChance then
-        local hasItem = QBCore.Functions.HasItem(Config.LockpickItem)
-        if hasItem then
-            if Config.Minigames.BDMinigames.Enabled then
-                local unlocks = Config.Minigames.BDMinigames.Unlocks
-                local rows = Config.Minigames.BDMinigames.Rows
-                local time = Config.Minigames.BDMinigames.Time
-                local success = exports['bd-minigames']:Lockpick(unlocks, rows, time)
-                if success then
-                    TriggerServerEvent('ant-gangsystem:server:GravestoneRobbed', gravestone)
-                else
-                    TriggerServerEvent('ant-gangsystem:server:FailedGravestoneRobbery', gravestone)
-                    TriggerEvent('ant-gravedigging:client:Notify', "Failed Lockpick", "You failed to break the lockpick on the coffin!", "error")
+    if lib.progressBar({
+        duration = Config.Progressbar.duration,
+        label = "Robbing Gravestone",
+        useWhileDead = false,
+        canCancel = true,
+        disable = {
+            move = true,
+            car = true,
+            combat = true,
+            mouse = true,
+            sprint = true
+        },
+        anim = {
+            dict = Config.Progressbar.animDict,
+            clip = Config.Progressbar.animClip
+        },
+        --[[ WORKING ON THIS BUT THE PLACEMENT IS OFF
+        prop = {
+            model = 'prop_tool_shovel',
+            bone = 60309,
+            pos = { x = 0.1, y = -0.02, z = -0.02 },
+            rot = { x = 90.0, y = 180.0, z = 270.0 }
+        }
+        ]]
+    }) then
+        local chance = math.random(1, 100)
+        if chance <= Config.LockCoffinChance then
+            local hasItem = QBCore.Functions.HasItem(Config.LockpickItem)
+            if hasItem then
+                if Config.Minigames.BDMinigames.Enabled then
+                    local unlocks = Config.Minigames.BDMinigames.Unlocks
+                    local rows = Config.Minigames.BDMinigames.Rows
+                    local time = Config.Minigames.BDMinigames.Time
+                    local success = exports['bd-minigames']:Lockpick(unlocks, rows, time)
+                    if success then
+                        TriggerServerEvent('ant-gangsystem:server:GravestoneRobbed', gravestone)
+                    else
+                        TriggerServerEvent('ant-gangsystem:server:FailedGravestoneRobbery', gravestone)
+                        TriggerEvent('ant-gravedigging:client:Notify', "Failed Lockpick", "You failed to break the lockpick on the coffin!", "error")
+                    end
                 end
+            else
+                TriggerEvent('ant-gravedigging:client:Notify', "Missing Item", "You have nothing to pick the lock with!", "error")
             end
         else
-            TriggerEvent('ant-gravedigging:client:Notify', "Missing Item", "You have nothing to pick the lock with!", "error")
+            TriggerServerEvent('ant-gangsystem:server:GravestoneRobbed', gravestone)
         end
     else
-        TriggerServerEvent('ant-gangsystem:server:GravestoneRobbed', gravestone)
+        TriggerEvent('ant-gravedigging:client:Notify', "Cancelled", "You stopped robbing the grave before you could get anything!", "error")
     end
-    ClearPedTasks(playerPedId)
-    FreezeEntityPosition(playerPedId, false)
 end)
 
 RegisterNetEvent('ant-gravedigging:client:RobTombstone', function(tombstone)
-    local playerPedId = PlayerPedId()
-    TaskStartScenarioInPlace(playerPedId, "CODE_HUMAN_MEDIC_TEND_TO_DEAD", 0, true)
-    FreezeEntityPosition(playerPedId, true)
-    local animPlaying = true
-    Citizen.CreateThread(function()
-        Citizen.Wait(15000)
-        animPlaying = false
-    end)
-    while animPlaying do
-        Citizen.Wait(0)
-    end
-    -- If the progress bar completes
-    local chance = math.random(1, 100)
-    if chance <= Config.LockCoffinChance then
-        local hasItem = QBCore.Functions.HasItem(Config.LockpickItem)
-        if hasItem then
-            if Config.Minigames.BDMinigames.Enabled then
-                local unlocks = Config.Minigames.BDMinigames.Unlocks
-                local rows = Config.Minigames.BDMinigames.Rows
-                local time = Config.Minigames.BDMinigames.Time
-                local success = exports['bd-minigames']:Lockpick(unlocks, rows, time)
-                if success then
-                    if Config.GhostAttack then
-                        local chance = math.random(1, 100)
-                        if chance <= Config.GhostAttackChance then
-                            TriggerServerEvent('ant-gangsystem:server:TombstoneRobbed', tombstone)
-                            TriggerEvent('ant-gravedigging:client:GhostAttack')
-                        else
-                            TriggerServerEvent('ant-gangsystem:server:TombstoneRobbed', tombstone)
+    if lib.progressBar({
+        duration = Config.Progressbar.duration,
+        label = "Robbing Tombstone",
+        useWhileDead = false,
+        canCancel = true,
+        disable = {
+            move = true,
+            car = true,
+            combat = true,
+            mouse = true,
+            sprint = true
+        },
+        anim = {
+            dict = Config.Progressbar.animDict,
+            clip = Config.Progressbar.animClip
+        },
+        --[[ WORKING ON THIS BUT THE PLACEMENT IS OFF
+        prop = {
+            model = 'prop_tool_shovel',
+            bone = 60309,
+            pos = { x = 0.1, y = -0.02, z = -0.02 },
+            rot = { x = 90.0, y = 180.0, z = 270.0 }
+        }
+        ]]
+    }) then
+        -- If the progress bar completes
+        local chance = math.random(1, 100)
+        if chance <= Config.LockCoffinChance then
+            local hasItem = QBCore.Functions.HasItem(Config.LockpickItem)
+            if hasItem then
+                if Config.Minigames.BDMinigames.Enabled then
+                    local unlocks = Config.Minigames.BDMinigames.Unlocks
+                    local rows = Config.Minigames.BDMinigames.Rows
+                    local time = Config.Minigames.BDMinigames.Time
+                    local success = exports['bd-minigames']:Lockpick(unlocks, rows, time)
+                    if success then
+                        if Config.GhostAttack then
+                            local chance = math.random(1, 100)
+                            if chance <= Config.GhostAttackChance then
+                                TriggerServerEvent('ant-gangsystem:server:TombstoneRobbed', tombstone)
+                                TriggerEvent('ant-gravedigging:client:GhostAttack')
+                            else
+                                TriggerServerEvent('ant-gangsystem:server:TombstoneRobbed', tombstone)
+                            end
                         end
+                    else
+                        TriggerServerEvent('ant-gangsystem:server:FailedTombstoneRobbery', tombstone)
+                        TriggerEvent('ant-gravedigging:client:Notify', "Failed Lockpick", "You failed to break the lockpick on the coffin!", "error")
                     end
-                else
-                    TriggerServerEvent('ant-gangsystem:server:FailedTombstoneRobbery', tombstone)
-                    TriggerEvent('ant-gravedigging:client:Notify', "Failed Lockpick", "You failed to break the lockpick on the coffin!", "error")
                 end
+            else
+                TriggerEvent('ant-gravedigging:client:Notify', "Missing Item", "You have nothing to pick the lock with!", "error")
             end
         else
-            TriggerEvent('ant-gravedigging:client:Notify', "Missing Item", "You have nothing to pick the lock with!", "error")
+            TriggerServerEvent('ant-gangsystem:server:TombstoneRobbed', tombstone)
         end
     else
-        TriggerServerEvent('ant-gangsystem:server:TombstoneRobbed', tombstone)
+        TriggerEvent('ant-gravedigging:client:Notify', "Cancelled", "You stopped robbing the tombstone before you could get anything!", "error")
     end
 end)
 
