@@ -156,7 +156,7 @@ QBCore.Functions.CreateCallback('ant-gravedigging:server:IsGravestoneRobbed', fu
 end)
 
 QBCore.Functions.CreateCallback('ant-gravedigging:server:IsTombstoneRobbed', function(source, cb, tombstone)
-    local tombstoneRobbed = RobbedGravestones[tombstone]
+    local tombstoneRobbed = RobbedTombstones[tombstone]
     if tombstoneRobbed then
         cb(false)
     else
