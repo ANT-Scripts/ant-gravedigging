@@ -8,13 +8,13 @@ Config.CursedItems = {
 }
 
 Config.SpawnZombies = true
-Config.ChanceForZombie = 0 -- 50% chance for a zombie to spawn
+Config.ChanceForZombie = 100 -- 50% chance for a zombie to spawn
 
 Config.GhostAttack = true
 Config.GhostAttackChance = 100
 Config.GhostAttackRecoveryTime = 15000
 
-Config.LockCoffinChance = 30
+Config.LockCoffinChance = 80
 Config.LockpickItem = "advancedlockpick"
 
 Config.Minigames = {
@@ -35,7 +35,7 @@ Config.TombstoneRewards = {
 }
 
 Config.Progressbar = {
-    duration = 15000,
+    duration = 1000,
     animDict = "amb@world_human_gardener_plant@male@base",
     animClip = "base",
 }
@@ -126,5 +126,7 @@ Config.Tombstones = { -- These are the bigger gravestones
     [3] = {coords = vec4(-1632.3332519531, -146.1063079834, 57.472129821777, 303.52917480469)},
     [4] = {coords = vec4(-1633.7620849609, -142.54107666016, 57.628887176514, 300.76800537109)},
     [5] = {coords = vec4(-1634.7370605469, -140.79983520508, 57.707256317139, 304.84619140625)},
+    [6] = {coords = vec4(-1633.7772216797, -169.40777587891, 56.627368927002, 38.777191162109)},
+    [7] = {coords = vec4(-1632.1313476562, -168.22135925293, 56.643184661865, 43.855167388916)},
     --[3] = {coords = },
 }

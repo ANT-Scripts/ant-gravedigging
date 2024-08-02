@@ -1,4 +1,5 @@
 QBCore = exports['qb-core']:GetCoreObject()
+local GhostAttacking = false
 
 RegisterNetEvent('ant-gravedigging:client:Notify', function(label, message, notifyType)
     if Config.Notify == "ox" then
@@ -156,10 +157,15 @@ RegisterNetEvent('ant-gravedigging:client:GhostAttack', function()
         StopScreenEffect("DrugsMichaelAliensFightIn")
         StopScreenEffect("DrugsMichaelAliensFight")
         StopScreenEffect("DrugsMichaelAliensFightOut")
+        GhostAttacking = false
     end)
 end)
 
 RegisterNetEvent('ant-gravedigging:client:RobGravestone', function(gravestone)
+    if GhostAttacking then
+        return
+    end
+    LocalPlayer.state:set('inv_busy', true, true)
     if lib.progressBar({
         duration = Config.Progressbar.duration,
         label = "Robbing Gravestone",
@@ -185,6 +191,7 @@ RegisterNetEvent('ant-gravedigging:client:RobGravestone', function(gravestone)
         }
         ]]
     }) then
+        LocalPlayer.state:set('inv_busy', false, true)
         local chance = math.random(1, 100)
         if chance <= Config.LockCoffinChance then
             local hasItem = QBCore.Functions.HasItem(Config.LockpickItem)
@@ -208,11 +215,16 @@ RegisterNetEvent('ant-gravedigging:client:RobGravestone', function(gravestone)
             TriggerServerEvent('ant-gangsystem:server:GravestoneRobbed', gravestone)
         end
     else
+        LocalPlayer.state:set('inv_busy', false, true)
         TriggerEvent('ant-gravedigging:client:Notify', "Cancelled", "You stopped robbing the grave before you could get anything!", "error")
     end
 end)
 
 RegisterNetEvent('ant-gravedigging:client:RobTombstone', function(tombstone)
+    if GhostAttacking then
+        return
+    end
+    LocalPlayer.state:set('inv_busy', true, true)
     if lib.progressBar({
         duration = Config.Progressbar.duration,
         label = "Robbing Tombstone",
@@ -239,6 +251,7 @@ RegisterNetEvent('ant-gravedigging:client:RobTombstone', function(tombstone)
         ]]
     }) then
         -- If the progress bar completes
+        LocalPlayer.state:set('inv_busy', false, true)
         local chance = math.random(1, 100)
         if chance <= Config.LockCoffinChance then
             local hasItem = QBCore.Functions.HasItem(Config.LockpickItem)
@@ -250,7 +263,7 @@ RegisterNetEvent('ant-gravedigging:client:RobTombstone', function(tombstone)
                     local success = exports['bd-minigames']:Lockpick(unlocks, rows, time)
                     if success then
                         if Config.GhostAttack then
-                            local chance = math.random(1, 100)
+                            chance = math.random(1, 100)
                             if chance <= Config.GhostAttackChance then
                                 TriggerServerEvent('ant-gangsystem:server:TombstoneRobbed', tombstone)
                                 TriggerEvent('ant-gravedigging:client:GhostAttack')
@@ -262,8 +275,19 @@ RegisterNetEvent('ant-gravedigging:client:RobTombstone', function(tombstone)
                         TriggerServerEvent('ant-gangsystem:server:FailedTombstoneRobbery', tombstone)
                         TriggerEvent('ant-gravedigging:client:Notify', "Failed Lockpick", "You failed to break the lockpick on the coffin!", "error")
                     end
+                else
+                    if Config.GhostAttack then
+                        chance = math.random(1, 100)
+                        if chance <= Config.GhostAttackChance then
+                            TriggerServerEvent('ant-gangsystem:server:TombstoneRobbed', tombstone)
+                            TriggerEvent('ant-gravedigging:client:GhostAttack')
+                        else
+                            TriggerServerEvent('ant-gangsystem:server:TombstoneRobbed', tombstone)
+                        end
+                    end
                 end
             else
+                LocalPlayer.state:set('inv_busy', false, true)
                 TriggerEvent('ant-gravedigging:client:Notify', "Missing Item", "You have nothing to pick the lock with!", "error")
             end
         else
@@ -305,6 +329,7 @@ RegisterNetEvent('ant-gravedigging:client:SyncZombie', function(netId)
 end)
 
 function GhostAttack()
+    GhostAttacking = true
     StartScreenEffect("DrugsMichaelAliensFightIn", 3.0, 0)Wait(math.random(5000, 8000))
     Wait(math.random(500, 1000))
     StartScreenEffect("DrugsMichaelAliensFight", 3.0, 0)

@@ -114,6 +114,7 @@ RegisterNetEvent('ant-gangsystem:server:GravestoneRobbed', function(gravestone)
         local chance = math.random(1, 100)
         if chance <= Config.ChanceForZombie then
             TriggerClientEvent('ant-gravedigging:client:SpawnZombie', src, playerCoords, src)
+            GravestoneReward(src)
         else
             -- Give Reward
             GravestoneReward(src)
@@ -126,7 +127,6 @@ end)
 
 RegisterNetEvent('ant-gangsystem:server:TombstoneRobbed', function(tombstone)
     local src = source
-    local playerCoords = GetEntityCoords(GetPlayerPed(src))
     RobbedTombstones[tombstone] = true
     TombstoneReward(src)
 end)
