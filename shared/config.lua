@@ -1,5 +1,5 @@
 Config = {}
-Config.Notify = "ox_lib" -- "ox_lib" / "okok" / "qb" / "other"
+Config.Notify = "ox" -- "ox" / "okok" / "qb" / "other"
 
 Config.UseCursedItems = true
 Config.TimeUntilGhostAttack = 45 -- In minutes, how long until the Ghost Attacks if you have a cursed item. This is a LOOP

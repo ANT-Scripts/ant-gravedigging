@@ -192,6 +192,7 @@ RegisterNetEvent('ant-gravedigging:client:RobGravestone', function(gravestone)
         ]]
     }) then
         LocalPlayer.state:set('inv_busy', false, true)
+        print("here")
         local chance = math.random(1, 100)
         if chance <= Config.LockCoffinChance then
             local hasItem = QBCore.Functions.HasItem(Config.LockpickItem)
@@ -202,9 +203,9 @@ RegisterNetEvent('ant-gravedigging:client:RobGravestone', function(gravestone)
                     local time = Config.Minigames.BDMinigames.Time
                     local success = exports['bd-minigames']:Lockpick(unlocks, rows, time)
                     if success then
-                        TriggerServerEvent('ant-gangsystem:server:GravestoneRobbed', gravestone)
+                        TriggerServerEvent('ant-gravedigging:server:GravestoneRobbed', gravestone)
                     else
-                        TriggerServerEvent('ant-gangsystem:server:FailedGravestoneRobbery', gravestone)
+                        TriggerServerEvent('ant-gravedigging:server:FailedGravestoneRobbery', gravestone)
                         TriggerEvent('ant-gravedigging:client:Notify', "Failed Lockpick", "You failed to break the lockpick on the coffin!", "error")
                     end
                 end
@@ -212,7 +213,7 @@ RegisterNetEvent('ant-gravedigging:client:RobGravestone', function(gravestone)
                 TriggerEvent('ant-gravedigging:client:Notify', "Missing Item", "You have nothing to pick the lock with!", "error")
             end
         else
-            TriggerServerEvent('ant-gangsystem:server:GravestoneRobbed', gravestone)
+            TriggerServerEvent('ant-gravedigging:server:GravestoneRobbed', gravestone)
         end
     else
         LocalPlayer.state:set('inv_busy', false, true)
@@ -265,24 +266,24 @@ RegisterNetEvent('ant-gravedigging:client:RobTombstone', function(tombstone)
                         if Config.GhostAttack then
                             chance = math.random(1, 100)
                             if chance <= Config.GhostAttackChance then
-                                TriggerServerEvent('ant-gangsystem:server:TombstoneRobbed', tombstone)
+                                TriggerServerEvent('ant-gravedigging:server:TombstoneRobbed', tombstone)
                                 TriggerEvent('ant-gravedigging:client:GhostAttack')
                             else
-                                TriggerServerEvent('ant-gangsystem:server:TombstoneRobbed', tombstone)
+                                TriggerServerEvent('ant-gravedigging:server:TombstoneRobbed', tombstone)
                             end
                         end
                     else
-                        TriggerServerEvent('ant-gangsystem:server:FailedTombstoneRobbery', tombstone)
+                        TriggerServerEvent('ant-gravedigging:server:FailedTombstoneRobbery', tombstone)
                         TriggerEvent('ant-gravedigging:client:Notify', "Failed Lockpick", "You failed to break the lockpick on the coffin!", "error")
                     end
                 else
                     if Config.GhostAttack then
                         chance = math.random(1, 100)
                         if chance <= Config.GhostAttackChance then
-                            TriggerServerEvent('ant-gangsystem:server:TombstoneRobbed', tombstone)
+                            TriggerServerEvent('ant-gravedigging:server:TombstoneRobbed', tombstone)
                             TriggerEvent('ant-gravedigging:client:GhostAttack')
                         else
-                            TriggerServerEvent('ant-gangsystem:server:TombstoneRobbed', tombstone)
+                            TriggerServerEvent('ant-gravedigging:server:TombstoneRobbed', tombstone)
                         end
                     end
                 end
@@ -291,7 +292,7 @@ RegisterNetEvent('ant-gravedigging:client:RobTombstone', function(tombstone)
                 TriggerEvent('ant-gravedigging:client:Notify', "Missing Item", "You have nothing to pick the lock with!", "error")
             end
         else
-            TriggerServerEvent('ant-gangsystem:server:TombstoneRobbed', tombstone)
+            TriggerServerEvent('ant-gravedigging:server:TombstoneRobbed', tombstone)
         end
     else
         TriggerEvent('ant-gravedigging:client:Notify', "Cancelled", "You stopped robbing the tombstone before you could get anything!", "error")
